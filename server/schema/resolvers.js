@@ -51,6 +51,32 @@ module.exports.resolvers = {
             const token = signToken(user);
 
             return { user, token }
+        },
+        saveBook: async (parent, args, context) => {
+            if (context.user) {
+                const updatedUser = await User.findByIdAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { savedBooks: args.input }},
+                    { new: true, runValidators: true }
+                )
+
+                return updatedUser
+            }  
+            
+            throw new AuthenticationError('You need to be logged in!')
+        },
+        removeBook: async (parent, args, context) => {
+            if (context.user) {
+                const deleteBook = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { savedBooks: { bookId: args.bookId }}},
+                    { new: true }
+                )
+
+                return deleteBook
+            }
+            
+            throw new AuthenticationError('You need to be logged in!')
         }
 
 
