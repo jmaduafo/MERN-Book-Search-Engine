@@ -60,7 +60,7 @@ const resolvers = {
                     { new: true, runValidators: true }
                 )
 
-                return updatedUser
+                return updatedUser;
             }  
             
             throw new AuthenticationError('You need to be logged in!')
