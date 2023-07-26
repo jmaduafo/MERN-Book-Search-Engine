@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express')
 
-module.exports.typeDefs = gql`
+const typeDefs = gql`
     type Query {
         me: User
     }
@@ -45,3 +45,5 @@ module.exports.typeDefs = gql`
         removeBook(bookId: ID!): User
     }
 `
+
+module.exports = typeDefs
